@@ -4,11 +4,16 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class LeaveDAO {
 
-	public static boolean upload(Date s_Date, Date e_Date, String reason, int id, int mid) throws SQLException {
-		String sql = "INSERT INTO leave2 values (?,?,?,?,?,?)";
+	public static boolean upload(Date s_Date, Date e_Date, String reason, int id, int mid) throws SQLException, ParseException {
+	    
+            
+            String sql = "INSERT INTO leave2 values (?,?,?,?,?,?)";
 		PrintWriter pw = new PrintWriter(System.out, true);
 		pw.println("in leave dao");
 		PreparedStatement statement = DBAccess.getConnection().prepareStatement(sql);

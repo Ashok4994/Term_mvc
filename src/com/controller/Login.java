@@ -27,8 +27,8 @@ public class Login extends HttpServlet {
 		String pass = request.getParameter("passwd").trim();
 		String userRole = null;
 		Integer user_id = Integer.parseInt(uid);
-		ResponseObject resp = new ResponseObject();
-		PrintWriter out = response.getWriter();
+    ResponseObject resp = new ResponseObject();
+                                PrintWriter out = response.getWriter();
 
 		try {
 			resp = RegisterationService.authenticateLogin(user_id, pass);

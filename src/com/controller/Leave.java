@@ -31,15 +31,15 @@ public class Leave extends HttpServlet {
 		String end_date = request.getParameter("enddate").toString();
 		String reason = request.getParameter("reason");
 		HttpSession session = request.getSession();
-		Integer id = (Integer) session.getAttribute("user_id");
+		Integer id = (Integer) session.getAttribute("id");
 		Integer mid = (Integer) session.getAttribute("manager_id");
-		PrintWriter out = response.getWriter();
-		out.println("manager id=" + mid);
+		//PrintWriter out = response.getWriter();
+		//out.println("manager id=" + mid);
 		boolean status;
 		try {
-			out.print("before upload service");
+			//out.print("before upload service");
 			status = LeaveService.upload(start_date, end_date, reason, id, mid);
-			out.print("after upload service");
+			//out.print("after upload service");
 			if (status) {
 				response.sendRedirect("user_home.jsp");
 			} else {

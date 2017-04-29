@@ -12,20 +12,20 @@ public class LeaveService {
 
 	public static boolean upload(String start_date, String end_date, String reason, Integer id, Integer mid)
 			throws SQLException, ParseException {
-
-		PrintWriter pw = new PrintWriter(System.out, true);
-		pw.println("in leave service");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date startDate = null;
-		Date endDate = null;
+            
+             java.util.Date startDate = null;
+		java.util.Date endDate = null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		startDate = sdf.parse(start_date);
 		endDate = sdf.parse(end_date);
+              java.sql.Date sDate = new java.sql.Date(startDate.getTime());
+		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
+            
+
 		boolean status;
 
-		java.sql.Date s_Date = new java.sql.Date(startDate.getTime());
-		java.sql.Date e_Date = new java.sql.Date(endDate.getTime());
-
-		status = LeaveDAO.upload(s_Date, e_Date, reason, id, mid);
+		
+		status = LeaveDAO.upload(sDate, eDate, reason, id, mid);
 
 		return status;
 
