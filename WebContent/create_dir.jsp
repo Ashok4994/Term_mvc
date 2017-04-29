@@ -29,7 +29,7 @@
  <div class="panel-heading">Create new Directory</div>
   <div class="panel-body">
  
-<form method="post" action="CreatDirectory" method="POST">
+<form method="post" action="CreateDir" method="POST">
   <div class="form-group">
   
     <label for="exampleInputEmail1">Directory Name</label>
