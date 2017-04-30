@@ -53,7 +53,7 @@ public class CreateDir extends HttpServlet {
         Integer dirid = Integer.parseInt(dir_id);
 
         HttpSession session = request.getSession();
-        Integer mid = (Integer) session.getAttribute("manager_id");
+        
         Integer id = (Integer) session.getAttribute("id");
         boolean status;
         try {

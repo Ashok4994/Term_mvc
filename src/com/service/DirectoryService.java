@@ -6,7 +6,10 @@
 package com.service;
 
 import com.dao.DirectorDAO;
+import com.model.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,7 +24,16 @@ public class DirectoryService {
         return status;
     }
             
-    
+    public static ArrayList<DirectoryBean> getown(int user_id) throws SQLException {
+        ArrayList<DirectoryBean> a;
+        a=DirectorDAO.getOwnDirectories(user_id);
+        return a;
+    }
+    public static ArrayList<DirectoryBean> getmanagers(int m_id) throws SQLException {
+        ArrayList<DirectoryBean> a;
+        a=DirectorDAO.getMDirectories(m_id);
+        return a;
+    }
     
     
 }

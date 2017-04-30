@@ -1,5 +1,9 @@
 package com.controller;
 
+import com.model.DirectoryBean;
+import com.model.LeaveBean;
+import com.service.DirectoryService;
+import com.service.LeaveService;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -13,33 +17,55 @@ import javax.servlet.http.HttpSession;
 
 import com.service.RegisterationService;
 import com.utility.ResponseObject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Servlet implementation class Login
  */
 @WebServlet("/Login")
 public class Login extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String uid = request.getParameter("uid").trim();
-		String pass = request.getParameter("passwd").trim();
-		String userRole = null;
-		Integer user_id = Integer.parseInt(uid);
-    ResponseObject resp = new ResponseObject();
-                                PrintWriter out = response.getWriter();
+    private static final long serialVersionUID = 1L;
 
-		try {
-			resp = RegisterationService.authenticateLogin(user_id, pass);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String uid = request.getParameter("uid").trim();
+        String pass = request.getParameter("passwd").trim();
+        String userRole = null;
+        Integer user_id = Integer.parseInt(uid);
+        ResponseObject resp = new ResponseObject();
 
-			if (resp.getStatus()) {
-				HttpSession session = request.getSession();
-				session.setAttribute("id", user_id);
-				int mid = resp.getManagerId();
-				session.setAttribute("manager_id", mid);
-				userRole = resp.getRole();
+        List<LeaveBean> leaveList = new ArrayList<LeaveBean>();
+        List<LeaveBean> approve_leaveList = new ArrayList<LeaveBean>();
+        ArrayList<DirectoryBean> own_dir_list = new ArrayList<DirectoryBean>();
+        ArrayList<DirectoryBean> m_dir_list = new ArrayList<DirectoryBean>();
+        try {
+            resp = RegisterationService.authenticateLogin(user_id, pass);
 
+            if (resp.getStatus()) {
+                HttpSession session = request.getSession();
+                session.setAttribute("id", user_id);
+                int mid = resp.getManagerId();
+                session.setAttribute("manager_id", mid);
+                userRole = resp.getRole();
+
+                if (userRole.equals("employee") || userRole.equals("manager")) {
+
+                    leaveList = LeaveService.getStatus(user_id);
+                    approve_leaveList = LeaveService.showlist(user_id);
+                    own_dir_list = DirectoryService.getown(user_id);
+                    m_dir_list = DirectoryService.getmanagers(resp.getManagerId());
+                    session.setAttribute("leaveList", leaveList);
+                    session.setAttribute("approvalList", approve_leaveList);
+                    session.setAttribute("ownDirectoryList", own_dir_list);
+                    session.setAttribute("managers_dlist", m_dir_list);
+                    response.sendRedirect(request.getContextPath() + "/user_home.jsp");
+
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/admin_home.jsp");
+                }
+                /*
 				switch (userRole) { // check user role and redirect
 				case "employee":
 					response.sendRedirect(request.getContextPath() + "/user_home.jsp");
@@ -56,16 +82,16 @@ public class Login extends HttpServlet {
 					request.getRequestDispatcher("login.jsp").forward(request, response);
 					break;
 				}
+                 */
+            } else {
+                request.setAttribute("loginerror", resp.getResponse());
+                RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
+                rs.forward(request, response);
+            }
 
-			} else {
-				request.setAttribute("loginerror", resp.getResponse());
-				RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
-				rs.forward(request, response);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
