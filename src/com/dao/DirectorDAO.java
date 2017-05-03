@@ -46,6 +46,7 @@ public class DirectorDAO {
         }
         return own_dir;
     }
+
     public static ArrayList<DirectoryBean> getMDirectories(int m_id) throws SQLException {
         ArrayList<DirectoryBean> m_dir = new ArrayList<DirectoryBean>();
         String sql = "SELECT * FROM termproject.directory where manager_id=? and (permission='public' or permission='private' or permission='default');";

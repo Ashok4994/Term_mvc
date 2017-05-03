@@ -21,7 +21,7 @@
 
 
         <div class="container">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" col-xs-8>
                 <div class="panel-heading">Upload File</div>
                 <div class="panel-body">
 
@@ -37,18 +37,19 @@
 
                         </div>
 
-                        <% ArrayList<DirectoryBean> own_dlist = (ArrayList<DirectoryBean>) session.getAttribute("ownDirectoryList");
-                           ArrayList<DirectoryBean> managers_dlist = (ArrayList<DirectoryBean>) session.getAttribute("managers_dlist");                          
+                        <% ArrayList<DirectoryBean> own_dlist = (ArrayList<DirectoryBean>) request.getAttribute("ownDirectoryList");
+                           ArrayList<DirectoryBean> managers_dlist = (ArrayList<DirectoryBean>) request.getAttribute("managers_dlist");                          
 %>
                         
                         <div class="form-group">
                             <label for="exampleInputFile"> Select Directory</label>
                             <select id="disabledSelect" class="form-control" name="dir">
+                                <% if(!own_dlist.isEmpty()) {%>
                                     <optgroup label="Own Directories">
 
                                 <%for (int i = 0; i < own_dlist.size(); i++) {%>
                                 <option><%=own_dlist.get(i).getDirId() %></option>
-                                 <%}%>
+                                 <%}}%>
                             </optgroup>
                                    <optgroup label="Managers Directories">
                                     <%for (int i = 0; i < managers_dlist.size(); i++) {%>

@@ -39,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody>  
-                            <% ArrayList<LeaveBean> leaveList = (ArrayList<LeaveBean>) session.getAttribute("leaveList");%>
+                            <% ArrayList<LeaveBean> leaveList = (ArrayList<LeaveBean>) request.getAttribute("leaveList");%>
                             <%for (int i = 0; i < leaveList.size(); i++) {%>
                             <tr>
                                 <td><%=leaveList.get(i).getstartDate()%> </td>

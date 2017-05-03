@@ -35,8 +35,7 @@ public class Register extends HttpServlet {
 		String passwd = request.getParameter("pswd");
 		String cpassword = request.getParameter("cpass");
 		boolean status;
-		PrintWriter out = response.getWriter();
-		out.print("Before try");
+		
 		try {
 			status = RegisterationService.registeration(fname, lname, address, mobile, email, uid, passwd, cpassword);
 			if (status) {

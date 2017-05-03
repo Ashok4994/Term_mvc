@@ -41,8 +41,8 @@
                             <div class="title-div">Hello Administrator</div>
                         </div>
                         <div class="well">
-                            <a href="#">List of Registered Employees</a><br> <hr>
-                            <a href="people.jsp">Change Users Roles and Managers</a><br>  <hr>
+                            <a href="employees.jsp">List of Registered Employees</a><br> <hr>
+                            <a href="admin_user_update.jsp">Change Users Roles and Managers</a><br>  <hr>
                             <a href="people2.jsp">List of active employees</a><br>  <hr>
                             <a href="#">Run Payroll</a><br>  
                             

@@ -56,7 +56,6 @@
                                 <td><%=approvalList.get(i).getendDate()%> </td>    
                                 <td><%=approvalList.get(i).getreason()%> </td> 
                                 <td><%=approvalList.get(i).getuserid()%></td>
-
                                 <td>
                                     <form method="POST" action="ApproveLeave">
                                         <div class="form-group">
@@ -84,10 +83,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
-
-
-
     </body>
 </html>

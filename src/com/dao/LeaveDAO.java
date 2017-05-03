@@ -58,7 +58,7 @@ public class LeaveDAO {
 
         List<LeaveBean> showList = new ArrayList<LeaveBean>();
         int empid1=0;
-        String sql = "SELECT * FROM termproject.leave2 where man_id=?";
+        String sql = "SELECT * FROM termproject.leave2 where man_id=? and status='pending'";
         PreparedStatement pstm = DBAccess.getConnection().prepareStatement(sql);
         pstm.setInt(1, empid);
         ResultSet rs = pstm.executeQuery();
