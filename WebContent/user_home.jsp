@@ -158,7 +158,9 @@
                         <%if (role.equals("manager")) {%>
                         <li role="presentation"><a href="create_dir.jsp">Create New Directory</a></li>
                         <li role="presentation"><a href="#">Change permissions</a></li> <%}%>
-                        <li role="presentation"><a href="view_dir.jsp">View Directories</a></li>
+                        <!--<li role="presentation"><a href="view_dir.jsp">View Directories</a></li>-->
+                         <li role="presentation"><form method="POST" action="ViewDirectories"><input type="submit" value="View Directories"> </form></li>
+                        
                     </ul>
                 </li>
                 <%if (role.equals("manager")) {%>

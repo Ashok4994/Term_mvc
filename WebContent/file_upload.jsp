@@ -21,48 +21,53 @@
 
 
         <div class="container">
-            <div class="panel panel-primary" col-xs-8>
-                <div class="panel-heading">Upload File</div>
-                <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" class="pull-right">
+                    <div class="panel panel-primary" col-xs-8>
+                        <div class="panel-heading">Upload File</div>
+                        <div class="panel-body">
 
-                    <form method="post" action="Upload" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Description</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="Enter Description" size="50">
+                            <form method="post" action="Upload" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Description</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="Enter Description" size="50">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputFile">File input</label>
+                                    <input type="file" id="exampleInputFile" name="file_uploaded">
+
+                                </div>
+
+                                <% ArrayList<DirectoryBean> own_dlist = (ArrayList<DirectoryBean>) request.getAttribute("ownDirectoryList");
+                                    ArrayList<DirectoryBean> managers_dlist = (ArrayList<DirectoryBean>) request.getAttribute("managers_dlist");
+                                %>
+
+                                <div class="form-group">
+                                    <label for="exampleInputFile"> Select Directory</label>
+                                    <select id="disabledSelect" class="form-control" name="dir">
+                                        <% if (!own_dlist.isEmpty()) {%>
+                                        <optgroup label="Own Directories">
+
+                                            <%for (int i = 0; i < own_dlist.size(); i++) {%>
+                                            <option><%=own_dlist.get(i).getDirId()%></option>
+                                            <%}
+                                                }%>
+                                        </optgroup>
+                                        <optgroup label="Managers Directories">
+                                            <%for (int i = 0; i < managers_dlist.size(); i++) {%>
+                                            <option><%=managers_dlist.get(i).getDirId()%></option>
+                                            <%}%>   
+
+                                        </optgroup>
+
+                                    </select>
+
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                         </div>
-
-                        <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile" name="file_uploaded">
-
-                        </div>
-
-                        <% ArrayList<DirectoryBean> own_dlist = (ArrayList<DirectoryBean>) request.getAttribute("ownDirectoryList");
-                           ArrayList<DirectoryBean> managers_dlist = (ArrayList<DirectoryBean>) request.getAttribute("managers_dlist");                          
-%>
-                        
-                        <div class="form-group">
-                            <label for="exampleInputFile"> Select Directory</label>
-                            <select id="disabledSelect" class="form-control" name="dir">
-                                <% if(!own_dlist.isEmpty()) {%>
-                                    <optgroup label="Own Directories">
-
-                                <%for (int i = 0; i < own_dlist.size(); i++) {%>
-                                <option><%=own_dlist.get(i).getDirId() %></option>
-                                 <%}}%>
-                            </optgroup>
-                                   <optgroup label="Managers Directories">
-                                    <%for (int i = 0; i < managers_dlist.size(); i++) {%>
-                                <option><%=managers_dlist.get(i).getDirId() %></option>
-                                 <%}%>   
-                                       
-                                   </optgroup>
-
-                            </select>
-
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -54,6 +54,7 @@ public class Login extends HttpServlet {
                 session.setAttribute("id", user_id);
                 int mid = resp.getManagerId();
                 session.setAttribute("manager_id", mid);
+               // int level_id=resp.get
                 userRole = resp.getRole();
 
                 if (userRole.equals("employee") || userRole.equals("manager")) {

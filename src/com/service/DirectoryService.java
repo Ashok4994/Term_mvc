@@ -16,24 +16,38 @@ import java.util.List;
  * @author ashok
  */
 public class DirectoryService {
-   
-    public static boolean createdir(int mid , String dirname, int dir_id, String permission) throws SQLException{
-    
-      boolean status=DirectorDAO.create(mid,dirname,dir_id,permission);    
-        
+
+    public static boolean createdir(int mid, String dirname, int dir_id, String permission) throws SQLException {
+
+        boolean status = DirectorDAO.create(mid, dirname, dir_id, permission);
+
         return status;
     }
-            
+
     public static ArrayList<DirectoryBean> getown(int user_id) throws SQLException {
         ArrayList<DirectoryBean> a;
-        a=DirectorDAO.getOwnDirectories(user_id);
+        a = DirectorDAO.getOwnDirectories(user_id);
         return a;
     }
+
+    public static ArrayList<DirectoryBean> getSubd(int user_id,int level_id) throws SQLException {
+        ArrayList<DirectoryBean> a;
+        a = DirectorDAO.getSubDir(user_id,level_id);
+        return a;
+    }
+
     public static ArrayList<DirectoryBean> getmanagers(int m_id) throws SQLException {
         ArrayList<DirectoryBean> a;
-        a=DirectorDAO.getMDirectories(m_id);
+        a = DirectorDAO.getMDirectories(m_id);
         return a;
     }
+
+    public static ArrayList<DirectoryBean> getSuperd(int user_id, int level_id) throws SQLException {
+     ArrayList<DirectoryBean> a;
+        a = DirectorDAO.getSuperDir(user_id,level_id);
+        return a;
     
+    }
     
+
 }

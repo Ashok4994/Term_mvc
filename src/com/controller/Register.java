@@ -17,44 +17,49 @@ import com.service.RegisterationService;
  */
 @WebServlet("/Register")
 public class Register extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String fname = request.getParameter("fnm");
-		String lname = request.getParameter("lnm");
-		String address = request.getParameter("address");
-		String mobile = request.getParameter("mobile");
-		String email = request.getParameter("emailid");
-		String uid = request.getParameter("userid");
-		String passwd = request.getParameter("pswd");
-		String cpassword = request.getParameter("cpass");
-		boolean status;
-		
-		try {
-			status = RegisterationService.registeration(fname, lname, address, mobile, email, uid, passwd, cpassword);
-			if (status) {
-				response.sendRedirect("index.jsp");
-			} else {
-				request.setAttribute("error", "Invalid fileds");
-				RequestDispatcher rs = request.getRequestDispatcher("register.jsp");
-				rs.forward(request, response);
-			}
-		} catch (Exception e1) {
-			e1.printStackTrace();
-			/*
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     * response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        String fname = request.getParameter("fnm");
+        String lname = request.getParameter("lnm");
+        String address = request.getParameter("address");
+        String mobile = request.getParameter("mobile");
+        String email = request.getParameter("emailid");
+        String uid = request.getParameter("userid");
+        String passwd = request.getParameter("pswd");
+        String cpassword = request.getParameter("cpass");
+        boolean status;
+
+        try {
+            status = RegisterationService.registeration(fname, lname, address, mobile, email, uid, passwd, cpassword);
+            if (status) {
+
+                request.setAttribute("success", "Successfullly registered");
+                RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
+                rs.forward(request, response);
+                //response.sendRedirect("index.jsp");
+            } else {
+                request.setAttribute("error", "Invalid fileds");
+                RequestDispatcher rs = request.getRequestDispatcher("registr.jsp");
+                rs.forward(request, response);
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+            /*
 			 * request.setAttribute("error", "All fields are mandatory.");
 			 * RequestDispatcher rd =
 			 * request.getRequestDispatcher("register.jsp"); rd.forward(request,
 			 * response);
-			 */
-		}
+             */
+        }
 
-	}
+    }
 
 }

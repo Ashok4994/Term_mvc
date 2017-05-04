@@ -31,21 +31,28 @@
             int i = 0;%>
 
         <div class="container">
-            <div class="panel panel-success">
-                <div class="panel-heading">Profile</div>
-                <div class="panel-body">
-                    <table class="table table-striped ">
-                        <tr><td>First Name:</td><td> <%=emp_details.get(i).getFirstname()%></td></tr>
-                        <tr><td style="width:12%">Last Name</td><td><%=emp_details.get(i).getLastname()%></td></tr>
-                        <tr><td>Address</td><td><%=emp_details.get(i).getAddress()%></td></tr>
-                        <tr><td>Mobile Number</td><td><%= emp_details.get(i).getPhone()%></td></tr>
-                        <tr><td>Email ID</td><td><%=emp_details.get(i).getEmail()%></td></tr>
-                        <tr><td>Role</td><td><%=emp_details.get(i).getRole()%></td></tr>
-                        <tr><td>Status</td><td><%=emp_details.get(i).getStatus()%></td></tr>
-                        <tr><td>Manager ID</td><td><%=emp_details.get(i).getManagerId()%></td></tr>
-                        <tr><td>Team ID </td><td><%=emp_details.get(i).getTeamId()%></td></tr>
-                        <tr><td>Level ID</td><td><%=emp_details.get(i).getLevelId()%></td></tr>
-                    </table>
-                   
-                    </body>
-                    </html>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">Profile</div>
+                        <div class="panel-body">
+                            <table class="table table-striped ">
+                                <tr><td>First Name:</td><td> <%=emp_details.get(i).getFirstname()%></td></tr>
+                                <tr><td style="width:12%">Last Name</td><td><%=emp_details.get(i).getLastname()%></td></tr>
+                                <tr><td>Address</td><td><%=emp_details.get(i).getAddress()%></td></tr>
+                                <tr><td>Mobile Number</td><td><%= emp_details.get(i).getPhone()%></td></tr>
+                                <tr><td>Email ID</td><td><%=emp_details.get(i).getEmail()%></td></tr>
+                                <tr><td>Role</td><td><%=emp_details.get(i).getRole()%></td></tr>
+                                <tr><td>Status</td><td><%=emp_details.get(i).getStatus()%></td></tr>
+                                <tr><td>Manager ID</td><td><%=emp_details.get(i).getManagerId()%></td></tr>
+                                <tr><td>Team ID </td><td><%=emp_details.get(i).getTeamId()%></td></tr>
+                                <tr><td>Level ID</td><td><%=emp_details.get(i).getLevelId()%></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

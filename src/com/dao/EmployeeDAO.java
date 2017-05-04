@@ -18,7 +18,7 @@ public class EmployeeDAO {
 
         Integer a = Integer.parseInt(userid);
         Integer level_id = a % 10;
-        String insert = "insert into employee values" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insert = "insert into employee values" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pstm = DBAccess.getConnection().prepareStatement(insert);
         pstm.setString(1, firstname);
         pstm.setString(2, lastname);
@@ -33,8 +33,7 @@ public class EmployeeDAO {
         pstm.setInt(11, 0);
         pstm.setInt(12, level_id);
         pstm.setInt(13, 0);
-        pstm.setInt(14, 0);
-        pstm.setString(15, null);
+        pstm.setString(14, null);
         pstm.executeUpdate();
         pstm.close();
         return true;

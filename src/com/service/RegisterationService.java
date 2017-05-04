@@ -30,9 +30,10 @@ public class RegisterationService {
     public static ResponseObject authenticateLogin(Integer userid, String password) throws SQLException {
         ResponseObject fresponse = new ResponseObject();
         if (password.isEmpty()) {
-            fresponse.setResponse("Invalid Password");
+            fresponse.setResponse("Password is empty");
             fresponse.setStatus(false);
             return fresponse;
+            
         } else {
             fresponse = EmployeeDAO.authenticateLogin(userid, password);
             return fresponse;
