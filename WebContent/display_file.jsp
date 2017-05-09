@@ -27,8 +27,18 @@
             response.setHeader("Content-Disposition", "inline");
             response.setContentLength(fileData.length);
             OutputStream output = response.getOutputStream();
-            output.write(fileData);
-            output.flush();
+            if (type == "video/mpeg" || type == "audio/mpeg") {
+                System.out.print(type);%>
+        <audio controls>
+            <source src="${fileData}" type="video/mpeg">
+            <source src="${fileData}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+       
+            <%}else {
+        output.write(fileData);
+        output.flush();
+        }
         %>
 
     </body>

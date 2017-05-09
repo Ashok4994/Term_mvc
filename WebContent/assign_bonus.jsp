@@ -27,6 +27,7 @@
     <body>
         <br>
         <br>
+           <jsp:include page="header.jsp" />
         <% ArrayList<Employee> mngr_emps = (ArrayList<Employee>) request.getAttribute("mngr_emps");
             %>
 

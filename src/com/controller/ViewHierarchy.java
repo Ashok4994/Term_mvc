@@ -9,10 +9,7 @@ import com.model.Employee;
 import com.service.RegisterationService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +21,34 @@ import javax.servlet.http.HttpSession;
  *
  * @author ashok
  */
-@WebServlet(name = "AssignBonus", urlPatterns = {"/AssignBonus"})
-public class AssignBonus extends HttpServlet {
+@WebServlet(name = "ViewHierarchy", urlPatterns = {"/ViewHierarchy"})
+public class ViewHierarchy extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ViewHierarchy</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ViewHierarchy at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -39,12 +62,7 @@ public class AssignBonus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("id") == null) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-
-        }
-
+        doPost(request, response);
     }
 
     /**
@@ -58,22 +76,12 @@ public class AssignBonus extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.isNew()) {
-
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-        }
-
-        Integer user_id = (Integer) session.getAttribute("id");
-
-        ArrayList<Employee> manager_emp_list = new ArrayList<Employee>();
-        try {
-            manager_emp_list = RegisterationService.getEmployees(user_id);
-        } catch (SQLException ex) {
-            Logger.getLogger(AssignBonus.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        request.setAttribute("mngr_emps", manager_emp_list);
-        request.getRequestDispatcher("assign_bonus.jsp").forward(request, response);
+        
+        ArrayList<Employee> emp_list_hier = new ArrayList<Employee>();
+ HttpSession session = request.getSession();
+        Integer uid = (Integer) session.getAttribute("id");
+        
+  //emp_list_hier = RegisterationService.getSubEmployeesList();        
     }
 
     /**

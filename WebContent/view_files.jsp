@@ -26,7 +26,7 @@
     <body>
         <br>
         <br>
-        <br>
+           <jsp:include page="header.jsp" />
         <% ArrayList<FileBean> flist = (ArrayList<FileBean>) request.getAttribute("file_list"); %>
         <div class="container">
             <div class="row">
@@ -48,7 +48,7 @@
                                 <tbody>
                                     <%for (int j = 0; j < flist.size(); j++) {%>
                                     <tr>
-                                <form method="POST" action="Displayf" target="_blank">
+                                <form method="POST" action="Displayf">
                                         <td><%=flist.get(j).getFiled()%></td>
                                         <td><%=flist.get(j).getFiles()%></td>
                                         <td><%=flist.get(j).getType() %></td>

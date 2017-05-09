@@ -29,135 +29,253 @@
         <link rel="stylesheet" href="css/people.css">
     </head>
     <body>
-        <% ArrayList<Employee> emp_details = (ArrayList<Employee>) session.getAttribute("emp_list");
-            ArrayList<Integer> manager_ids = (ArrayList<Integer>) session.getAttribute("mng_list");%>
-        <div class="container">
+        <% ArrayList<Employee> active_emp_details = (ArrayList<Employee>) request.getAttribute("active_emplist");
+            ArrayList<Employee> inactive_emp_details = (ArrayList<Employee>) request.getAttribute("inactive_emplist");
+            ArrayList<Integer> manager_ids = (ArrayList<Integer>) request.getAttribute("manager_list");%>
 
-            <div id="user-list" class="row">
-                <div class="widget widget-2 primary"> <!-- TYPE PANEL -->
-                    <div class="widget-head"> <!-- HEAD PANEL -->
-                        <h4 class="heading"><i class="fa fa-briefcase"></i>Registered Users</h4>
-                    </div><!-- /HEAD PANEL -->
-
-                    <div class="widget-body" id="widget-body2"> <!-- CONTENT PANEL -->
-                        <legend>Registered Users</legend>
+        <br>
+        <br>
+        <br>
 
 
-
-                        <table class='table table-striped'>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>FirstName</th>
-                                    <th>LastName</th>
-                                    <th>Userid</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>ManagerID</th>
-                                    <th>Salary(per annum)</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+      
 
 
-                                <%for (int i = 0; i < emp_details.size(); i++) {
-                                        String role = emp_details.get(i).getRole();
-                                        String status = emp_details.get(i).getStatus();
-                                        Integer mid = emp_details.get(i).getManagerId();
-                                        Integer team_id = emp_details.get(i).getTeamId();%>
-                                <tr> <th  ><%out.print(i + 1);%></th>
-                                    <td><%=emp_details.get(i).getFirstname()%></td>
-                                    <td><%=emp_details.get(i).getLastname()%></td>
-                                    <td><%=emp_details.get(i).getUserId()%></td>
-                                    <!--<td><%=emp_details.get(i).getRole()%></td>-->
+                <div class="container">
 
-                                    <td> 
-                                        <!--Role-->
-                                        <form method="POST" action="AdminUpdate">
-                                            <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">Inactive Employees</div>
+                                <div class="panel-body">
+                                    <table class='table table-striped'>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>FirstName</th>
+                                                <th>LastName</th>
+                                                <th>Userid</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th>ManagerID</th>
+                                                <th>Salary(per annum)</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                                <select id="disabledSelect" class="form-control" name="role">
-                                                    <%if (role.equals("manager")) {%>
-                                                    <option>manager</option>
-                                                    <option>employee</option><%} else {%>
-                                                   
-                                                    <option>manager</option>
-                                                     <option selected>employee</option>
-                                                    <%}%>
-                                                </select>
-                                            </div>	
-                                    </td>
+                                            <%for (int i = 0; i < inactive_emp_details.size(); i++) {
+                                                    String role = inactive_emp_details.get(i).getRole();
+                                                    String status = inactive_emp_details.get(i).getStatus();
+                                                    Integer mid = inactive_emp_details.get(i).getManagerId();
+                                                    Integer team_id = inactive_emp_details.get(i).getTeamId();%>
+                                            <tr> <th><%out.print(i + 1);%></th>
+                                                <td><%=inactive_emp_details.get(i).getFirstname()%></td>
+                                                <td><%=inactive_emp_details.get(i).getLastname()%></td>
+                                                <td><%=inactive_emp_details.get(i).getUserId()%></td>
+                                                <!--<td><%=inactive_emp_details.get(i).getRole()%></td>-->
 
-<!-- <td><%=emp_details.get(i).getStatus()%></td> -->
-                                    <td>
-                                        <!--Status-->
+                                                <td> 
+                                                    <!--Role-->
+                                                    <form method="POST" action="AdminUpdate">
+                                                        <div class="form-group">
 
-                                        <div class="form-group">
+                                                            <select id="disabledSelect" class="form-control" name="role">
+                                                                <%if (role.equals("manager")) {%>
+                                                                <option>manager</option>
+                                                                <option>employee</option><%} else {%>
 
-                                            <select id="disabledSelect" class="form-control" name="stat">
-                                                <%if (status.equals("active")) {%>
-                                                <option>active</option>
-                                                <option>inactive</option><%} else {%>
-                                                <option>inactive</option>
-                                                <option>active</option>
-                                                <%}%>
-                                            </select>
-                                        </div>	
+                                                                <option>manager</option>
+                                                                <option selected>employee</option>
+                                                                <%}%>
+                                                            </select>
+                                                        </div>	
+                                                </td>
 
-                                    </td> 
-                                 <!--  <td><%=emp_details.get(i).getManagerId()%></td> -->
-                                    <td>
-                                        <!--ManagerID-->
+<!-- <td><%=inactive_emp_details.get(i).getStatus()%></td> -->
+                                                <td>
+                                                    <!--Status-->
 
-                                        <div class="form-group">
+                                                    <div class="form-group">
 
-                                            <select id="disabledSelect" class="form-control" name="mid">
-                                                <% if (status.equals("inactive") && mid == 0) {%>
-                                                <option>Not Assigned</option> <%} %>
-                                                <%for (int j = 0; j < manager_ids.size(); j++) {%>
-                                                <option><%=manager_ids.get(j)%></option>
-                                                <% }%>
-                                            </select>
-                                        </div>	
-                                    </td> 
-                                    <td>
-                                        <div class="form-group">
+                                                        <select id="disabledSelect" class="form-control" name="stat">
+                                                            <%if (status.equals("active")) {%>
+                                                            <option>active</option>
+                                                            <option>inactive</option><%} else {%>
+                                                            <option>inactive</option>
+                                                            <option>active</option>
+                                                            <%}%>
+                                                        </select>
+                                                    </div>	
 
-                                            <select id="disabledSelect" class="form-control" name="sal">
-                                                <% if (mid == 0){%>
-                                                <option>Not specified</option><%} %>
-                                                <option>72000</option>
-                                                <option>84000</option>
-                                                <option>96000</option>
-                                                <option>108000</option>
-                                            </select>
-                                        </div>	
-                                    </td>
-  
-                                    <td>
-                                        <button type="submit" class="btn btn-info">Update</button>
-                                    </td>
+                                                </td> 
+                                             <!--  <td><%=inactive_emp_details.get(i).getManagerId()%></td> -->
+                                                <td>
+                                                    <!--ManagerID-->
 
-                            <input type="hidden" name="empid"
-                                   value="<%=emp_details.get(i).getUserId()%>">
+                                                    <div class="form-group">
 
-                            </form>
-                            </tr> <%}%>
-                        </table>
+                                                        <select id="disabledSelect" class="form-control" name="mid">
+                                                            <% if (status.equals("inactive") && mid == 0) {%>
+                                                            <option>Not Assigned</option> <%} %>
+                                                            <%for (int j = 0; j < manager_ids.size(); j++) {%>
+                                                            <option><%=manager_ids.get(j)%></option>
+                                                            <% }%>
+                                                        </select>
+                                                    </div>	
+                                                </td> 
+                                                <td>
+                                                    <div class="form-group">
 
-                    </div><!-- /CONTENT PANEL -->
+                                                        <select id="disabledSelect" class="form-control" name="sal">
+                                                            <% if (mid == 0) {%>
+                                                            <option>Not specified</option><%}%>
+                                                            <option>72000</option>
+                                                            <option>84000</option>
+                                                            <option>96000</option>
+                                                            <option>108000</option>
+                                                        </select>
+                                                    </div>	
+                                                </td>
 
-                    <div class="widget-footer"><!-- FOOTER PANEL--> 
-                        <!--<a href="#" class="fa fa-minus-circle fa-1x" data-toggle="tooltip" data-placement="right" title="" data-original-title="FA-MINUS-CIRCLE"><i></i></a>-->
-                        <!--<a href="#" class="fa fa-pencil fa-1x" data-toggle="tooltip" data-placement="right" title="" data-original-title="FA-PENCIL"><i></i></a>-->
-                        <!--<a href="#" class="fa fa-search fa-1x" data-toggle="tooltip" data-placement="right" title="" data-original-title="FA-SEARCH"><i></i></a>-->
-                        <!--<a href="#" class="fa fa-plus-circle fa-1x" data-toggle="tooltip" data-placement="right" title="" data-original-title="FA-PLUS-CIRCLE"><i></i></a>-->
-                        <a href="#" id="toggle2" class="fa fa-chevron-up fa-1x" data-toggle="tooltip" data-placement="right" title="" data-original-title="FA-PLUS-CIRCLE"><i></i></a>
-                    </div><!-- /FOOTER PANEL--> 
+                                                <td>
+                                                    <button type="submit" class="btn btn-danger">Update</button>
+                                                </td>
 
-                </div> <!-- /TYPE PANEL -->
-            </div>
-        </div>
+                                        <input type="hidden" name="empid"
+                                               value="<%=inactive_emp_details.get(i).getUserId()%>">
+
+                                        </form>
+                                        </tr> <%}%>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <br>
+                <br>
+                <br>
+                <br>
+
+
+
+
+
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">Active Employees</div>
+                                <div class="panel-body">
+                                    <table class='table table-striped'>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>FirstName</th>
+                                                <th>LastName</th>
+                                                <th>Userid</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th>ManagerID</th>
+                                                <th>Salary(per annum)</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <%for (int i = 0; i < active_emp_details.size(); i++) {
+                                                    String role = active_emp_details.get(i).getRole();
+                                                    String status = active_emp_details.get(i).getStatus();
+                                                    Integer mid = active_emp_details.get(i).getManagerId();
+                                                    Integer team_id = active_emp_details.get(i).getTeamId();%>
+                                            <tr> <th  ><%out.print(i + 1);%></th>
+                                                <td><%=active_emp_details.get(i).getFirstname()%></td>
+                                                <td><%=active_emp_details.get(i).getLastname()%></td>
+                                                <td><%=active_emp_details.get(i).getUserId()%></td>
+                                                <!--<td><%=active_emp_details.get(i).getRole()%></td>-->
+
+                                                <td> 
+                                                    <!--Role-->
+                                                    <form method="POST" action="AdminUpdate">
+                                                        <div class="form-group">
+
+                                                            <select id="disabledSelect" class="form-control" name="role">
+                                                                <%if (role.equals("manager")) {%>
+                                                                <option>manager</option>
+                                                                <option>employee</option><%} else {%>
+
+                                                                <option>manager</option>
+                                                                <option selected>employee</option>
+                                                                <%}%>
+                                                            </select>
+                                                        </div>	
+                                                </td>
+
+<!-- <td><%=active_emp_details.get(i).getStatus()%></td> -->
+                                                <td>
+                                                    <!--Status-->
+
+                                                    <div class="form-group">
+
+                                                        <select id="disabledSelect" class="form-control" name="stat">
+                                                            <%if (status.equals("active")) {%>
+                                                            <option>active</option>
+                                                            <option>inactive</option><%} else {%>
+                                                            <option>inactive</option>
+                                                            <option>active</option>
+                                                            <%}%>
+                                                        </select>
+                                                    </div>	
+
+                                                </td> 
+                                             <!--  <td><%=active_emp_details.get(i).getManagerId()%></td> -->
+                                                <td>
+                                                    <!--ManagerID-->
+
+                                                    <div class="form-group">
+
+                                                        <select id="disabledSelect" class="form-control" name="mid">
+                                                            <% if (status.equals("inactive") && mid == 0) {%>
+                                                            <option>Not Assigned</option> <%} %>
+                                                            <%for (int j = 0; j < manager_ids.size(); j++) {%>
+                                                            <option><%=manager_ids.get(j)%></option>
+                                                            <% }%>
+                                                        </select>
+                                                    </div>	
+                                                </td> 
+                                                <td>
+                                                    <div class="form-group">
+
+                                                        <select id="disabledSelect" class="form-control" name="sal">
+                                                            <% if (mid == 0) {%>
+                                                            <option>Not specified</option><%}%>
+                                                            <option>72000</option>
+                                                            <option>84000</option>
+                                                            <option>96000</option>
+                                                            <option>108000</option>
+                                                        </select>
+                                                    </div>	
+                                                </td>
+
+                                                <td>
+                                                    <button type="submit" class="btn btn-info">Update</button>
+                                                </td>
+
+                                        <input type="hidden" name="empid"
+                                               value="<%=active_emp_details.get(i).getUserId()%>">
+
+                                        </form>
+                                        </tr> <%}%>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </body>
 </html>

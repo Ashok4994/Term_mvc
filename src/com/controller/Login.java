@@ -32,6 +32,9 @@ public class Login extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+         HttpSession session = request.getSession();
+        
         String uid = request.getParameter("uid").trim();
         String pass = request.getParameter("passwd").trim();
         String userRole = null;
@@ -43,28 +46,28 @@ public class Login extends HttpServlet {
         //ArrayList<DirectoryBean> own_dir_list = new ArrayList<DirectoryBean>();
         //ArrayList<DirectoryBean> m_dir_list = new ArrayList<DirectoryBean>();
         ArrayList<Employee> emp_details = new ArrayList<Employee>();
-        ArrayList<Employee> a_emp_list = new ArrayList<Employee>();
+        //ArrayList<Employee> a_emp_list = new ArrayList<Employee>();
         //ArrayList<Employee> manager_emp_list = new ArrayList<Employee>();
-        ArrayList<Integer> mngr_list = new ArrayList<Integer>();
+        //ArrayList<Integer> mngr_list = new ArrayList<Integer>();
         try {
             resp = RegisterationService.authenticateLogin(user_id, pass);
 
             if (resp.getStatus()) {
-                HttpSession session = request.getSession();
+              
                 session.setAttribute("id", user_id);
                 int mid = resp.getManagerId();
                 session.setAttribute("manager_id", mid);
-               // int level_id=resp.get
+                // int level_id=resp.get
                 userRole = resp.getRole();
-
+                 session.setAttribute("role", userRole);
                 if (userRole.equals("employee") || userRole.equals("manager")) {
 
-                   // leaveList = LeaveService.getStatus(user_id);
-                   // approve_leaveList = LeaveService.showlist(user_id);
+                    // leaveList = LeaveService.getStatus(user_id);
+                    // approve_leaveList = LeaveService.showlist(user_id);
                     //own_dir_list = DirectoryService.getown(user_id);
                     //m_dir_list = DirectoryService.getmanagers(resp.getManagerId());
                     emp_details = RegisterationService.getdetails(user_id);
-                     //manager_emp_list = RegisterationService.getEmployees(user_id);
+                    //manager_emp_list = RegisterationService.getEmployees(user_id);
                     //session.setAttribute("leaveList", leaveList);
                     //session.setAttribute("approvalList", approve_leaveList);
                     //session.setAttribute("ownDirectoryList", own_dir_list);
@@ -74,15 +77,17 @@ public class Login extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/user_home.jsp");
 
                 } else {
-                    a_emp_list = RegisterationService.getuserlist();
-                    mngr_list = RegisterationService.getMngrlist();
-                    session.setAttribute("emp_list", a_emp_list);
-                    session.setAttribute("mng_list", mngr_list);
+                    //a_emp_list = RegisterationService.getuserlist();
+                    //mngr_list = RegisterationService.getMngrlist();
+                    //session.setAttribute("emp_list", a_emp_list);
+                    //session.setAttribute("mng_list", mngr_list);
                     response.sendRedirect(request.getContextPath() + "/admin_home.jsp");
                 }
                 /*
 				switch (userRole) { // check user role and redirect
 				case "employee":
+                                        emp_details = RegisterationService.getdetails(user_id);
+                                        session.setAttribute("emp_details", emp_details);
 					response.sendRedirect(request.getContextPath() + "/user_home.jsp");
 
 					break;

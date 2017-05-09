@@ -1,9 +1,8 @@
+ 
 <%@page import="com.model.Employee"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
-
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -64,176 +63,180 @@
     </head>
     <body background="http://localhost:8080/Sampletp/img/hdwallpaper.jpg">
 
+
+        <%
+            if (session.getAttribute("id") == null) {
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+            }
+        %>
+
+
     <link
         href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css"
         rel="stylesheet" media="screen">
     <!-- Header Area Start Here -->
-    <header>
-        <div class="header2-area">
-            <div class="header-bottom-area" id="sticker">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                            <div class="logo-area">
-                                <span><h3>EMS</h3></span>
-                            </div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                            <div class="main-menu-area">
-                                <nav>
-                                    <ul>
-                                            <!--<li><a href="<%=request.getContextPath()%>/controller?actionCode=getItemsOfCart&page=home" class="col-xs-24">Home</a></li>-->
-                                        <!--<li><a href="#" class="col-xs-24">About</a></li>-->
-                                        <!--<li><a href="cafeterialdetail?action=viewtable" class="col-xs-24">Cafeteria Details</a></li>-->
 
-                                        <!--<li><a href="Addfooditem.jsp" class="col-xs-24"> Menu Management</a></li>-->
+    <br>
+    <br>
 
-                                        <li><a
-                                                href="<%=request.getContextPath()%>/update_profile.jsp"
-                                                class="col-xs-24">Update Profile</a></li>
 
-                                        <li><a href="<%=request.getContextPath()%>/Logout"
-                                               class="col-xs-24">Log-Out</a></li>
+    <% ArrayList<Employee> emp_details = (ArrayList<Employee>) session.getAttribute("emp_details");
+        int i = 0;%>
+    <div class="row">
+        <div class="col-sm-12">
 
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <nav  class="navbar navbar-inverse" role="navigation" >
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="#"><span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></a> </li>
+                        <li><a href="#">Hello <%=emp_details.get(i).getFirstname()%></a></li>
+                        <li><a href="#">Hierarchy: <%=emp_details.get(i).getHierarchy()%></a></li>
+                    </ul>
+
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><ul class="dropdown">
+
+                            </ul></li>
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="<%=request.getContextPath()%>/Logout">Logout</a></li>
+                    </ul>
+                    </ul>
+
+
+                </div><!-- /.container-fluid -->
+            </nav>
         </div>
     </div>
-</header>
-<br>
-<br>
 
-<% ArrayList<Employee> emp_details = (ArrayList<Employee>) session.getAttribute("emp_details");
-    int i = 0;
-    String role = emp_details.get(i).getRole();%>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="container">
-            <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
 
-                <li role="presentation" class="dropdown">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Profile <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li role="presentation"><a href="view_profile.jsp">View Profile</a></li>
-                        <li role="presentation"><a href="update_profile.jsp">Update Profile</a></li>
+    <%   String role = emp_details.get(i).getRole();%>
 
-                    </ul>
-                </li>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#">Home</a></li>
 
-                <li role="presentation" class="dropdown">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Leave <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li role="presentation"><a href="leave_request.jsp">Request Leave</a></li>
-                        <li role="presentation"><form method="POST" action="LeaveStatus"><input type="submit" value="Leave Status"> </form></li>
+            <li role="presentation" class="dropdown">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li role="presentation"><a href="<%=request.getContextPath()%>/ProfileView">View Profile</a></li>
+                    <li role="presentation"><a href="update_profile.jsp">Update Profile</a></li>
+
+                </ul>
+            </li>
+
+            <li role="presentation" class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Leave <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li role="presentation"><a href="leave_request.jsp">Request Leave</a></li>
+                    <li role="presentation"><form method="POST" action="LeaveStatus"><input type="submit" value="Leave Status"> </form></li>
                             <%if (role.equals("manager")) {%>
-                        <!--<li role="presentation"><a href="approve_leave.jsp">Approve Leave</a></li> <%}%> -->
-                        <li role="presentation"><form method="POST" action="ApproveLv"><input type="submit" value="Approve Leave"> </form></li> 
-                    </ul>
-                </li>
-                <li role="files" class="dropdown">
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Files <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <!--<li role="presentation"><a href="file_upload.jsp">Upload files</a></li> -->
-                        <li role="presentation"><form method="POST" action="UploadFile"><input type="submit" value="Upload File"> </form></li>
-                        <li role="presentation"><a href="sample.jsp">View Files</a></li>
-                    </ul>
-                </li>
-                <li role="presentation" class="dropdown">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Directory <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <%if (role.equals("manager")) {%>
-                        <li role="presentation"><a href="create_dir.jsp">Create New Directory</a></li>
-                        <li role="presentation"><a href="#">Change permissions</a></li> <%}%>
-                        <!--<li role="presentation"><a href="view_dir.jsp">View Directories</a></li>-->
-                         <li role="presentation"><form method="POST" action="ViewDirectories"><input type="submit" value="View Directories"> </form></li>
-                        
-                    </ul>
-                </li>
-                <%if (role.equals("manager")) {%>
-                <li role="presentation" class="dropdown">
-                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Employees <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
 
-                       <!-- <li role="presentation"><a href="assign_bonus.jsp">Assign Bonus</a></li>-->
-                       <li role="presentation"><form method="POST" action="AssignBonus"><input type="submit" value="Assign Bonus"> </form></li>
-                       <li role="presentation"><a href="#">View Employee hierarchy</a></li>
-                    </ul>
-                </li><%}%>
+                    <!--<li role="presentation"><a href="approve_leave.jsp">Approve Leave</a></li>  -->
+                    <li role="presentation"><form method="POST" action="ApproveLv"><input type="submit" value="Approve Leave"> </form></li> <%}%>
+                </ul>
+            </li>
+            <li role="files" class="dropdown">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Files <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <!--<li role="presentation"><a href="file_upload.jsp">Upload files</a></li> -->
+                    <li role="presentation"><form method="POST" action="UploadFile"><input type="submit" value="Upload File"> </form></li>
+                    <li role="presentation"><a href="sample.jsp">View Files</a></li>
+                </ul>
+            </li>
+            <li role="presentation" class="dropdown">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Directory <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <%if (role.equals("manager")) {%>
+                    <li role="presentation"><a href="create_dir.jsp">Create New Directory</a></li>
 
-            </ul>
-        </div>
+                    <!--<li role="presentation"><a href="view_dir.jsp">View Directories</a></li>-->
+                    <li role="presentation"><form method="POST" action="ViewDirectories"><input type="submit" value="View Directories"> </form></li>
+                    <li role="presentation"><a href="<%=request.getContextPath()%>/ATEController">ATE Permissions</a></li> <%}%>
+                </ul>
+            </li>
+            <%if (role.equals("manager")) {%>
+            <li role="presentation" class="dropdown">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Employees <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+
+                    <!-- <li role="presentation"><a href="assign_bonus.jsp">Assign Bonus</a></li>-->
+                    <li role="presentation"><form method="POST" action="AssignBonus"><input type="submit" value="Assign Bonus"> </form></li>
+                    <li role="presentation"><a href="<%=request.getContextPath()%>/ViewHierarchy">View Employee hierarchy</a></li>
+                </ul>
+            </li><%}%>
+
+        </ul>
     </div>
-</nav>
-<br>
 
-<div class="container">
-    <ul class="nav nav-list">
-        <li class="nav-header">List header</li>
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Directory</a></li>
-    </ul>
+    <br>
 
-</div>
-<br>
-<br>
+    <div class="container">
+        <ul class="nav nav-list">
+            <li class="nav-header">List header</li>
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Directory</a></li>
+        </ul>
 
-<center>
-    <p>I'm a</p>
-    <b>
-        <span1>
-            web developer<br /> 
-            css cowboy<br />
-            self-facilitating media node<br />
-            box inside a box<br />
-            part of the problem
-        </span1>
-    </b>
+    </div>
+    <br>
+    <br>
 
-</center>	
+    <center>
+        <p>I'm a</p>
+        <b>
+            <span1>
+                web developer<br /> 
+                css cowboy<br />
+                self-facilitating media node<br />
+                box inside a box<br />
+                part of the problem
+            </span1>
+        </b>
 
 
+    </center>	
 
 
-<!-- jquery-->
-<script src="js/jquery-2.2.4.min.js" type="text/javascript"></script>
 
-<!-- Plugins js -->
-<!--<script src="js/plugins.js" type="text/javascript"></script>-->
 
-<!-- Bootstrap js -->
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- jquery-->
+    <script src="js/jquery-2.2.4.min.js" type="text/javascript"></script>
 
-<!-- WOW JS -->
-<script src="js/wow.min.js"></script>
+    <!-- Plugins js -->
+    <!--<script src="js/plugins.js" type="text/javascript"></script>-->
 
-<!-- Meanmenu Js -->
-<script src="js/jquery.meanmenu.min.js" type="text/javascript"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
 
-<!-- Srollup js -->
-<script src="js/jquery.scrollUp.min.js" type="text/javascript"></script>
+    <!-- WOW JS -->
+    <script src="js/wow.min.js"></script>
 
-<!-- Custom Js -->
-<script src="js/main.js" type="text/javascript"></script>
+    <!-- Meanmenu Js -->
+    <script src="js/jquery.meanmenu.min.js" type="text/javascript"></script>
 
-<!-- people Js -->
-<script src="js/people.js" type="text/javascript"></script>
+    <!-- Srollup js -->
+    <script src="js/jquery.scrollUp.min.js" type="text/javascript"></script>
+
+    <!-- Custom Js -->
+    <script src="js/main.js" type="text/javascript"></script>
+
+    <!-- people Js -->
+    <script src="js/people.js" type="text/javascript"></script>
 
 </body>
 </html>

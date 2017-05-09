@@ -6,7 +6,8 @@
 package com.controller;
 
 import com.model.Employee;
-import com.service.RegisterationService;
+import com.model.SalaryBean;
+import com.service.AdminService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -18,14 +19,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ashok
  */
-@WebServlet(name = "AssignBonus", urlPatterns = {"/AssignBonus"})
-public class AssignBonus extends HttpServlet {
+@WebServlet(name = "AdminPayroll", urlPatterns = {"/AdminPayroll"})
+public class AdminPayroll extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+       
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -39,12 +53,7 @@ public class AssignBonus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("id") == null) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-
-        }
-
+       doPost(request,response);
     }
 
     /**
@@ -58,22 +67,18 @@ public class AssignBonus extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.isNew()) {
-
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-        }
-
-        Integer user_id = (Integer) session.getAttribute("id");
-
-        ArrayList<Employee> manager_emp_list = new ArrayList<Employee>();
+        
+        ArrayList<SalaryBean> sal_list = new ArrayList<SalaryBean>();
+        
         try {
-            manager_emp_list = RegisterationService.getEmployees(user_id);
+            sal_list=AdminService.getSalList();
         } catch (SQLException ex) {
-            Logger.getLogger(AssignBonus.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminPayroll.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.setAttribute("mngr_emps", manager_emp_list);
-        request.getRequestDispatcher("assign_bonus.jsp").forward(request, response);
+        
+        request.setAttribute("salary_list",sal_list);
+         request.getRequestDispatcher("payroll.jsp").forward(request, response);
+
     }
 
     /**

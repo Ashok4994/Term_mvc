@@ -17,13 +17,13 @@
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
 
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="../css/style.css">
 
         <!-- Home page CSS -->
-        <link rel="stylesheet" href="css/admin.css">
+        <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
 
@@ -41,9 +41,9 @@
                             <div class="title-div">Hello Administrator</div>
                         </div>
                         <div class="well">
-                            <a href="employees.jsp">List of Registered Employees</a><br> <hr>
+                            <a href="/employees.jsp">List of Registered Employees</a><br> <hr>
                             <a href="admin_user_update.jsp">Change Users Roles and Managers</a><br>  <hr>
-                            <a href="people2.jsp">List of active employees</a><br>  <hr>
+                            <a href="/admin/people2.jsp">List of active employees</a><br>  <hr>
                             <a href="#">Run Payroll</a><br>  
                             
                         </div>

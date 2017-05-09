@@ -27,7 +27,8 @@
     <body>
         <br>
         <br>
-        <% ArrayList<Employee> emp_details = (ArrayList<Employee>) session.getAttribute("emp_details");
+           <jsp:include page="header.jsp" />
+        <% ArrayList<Employee> emp_details = (ArrayList<Employee>) request.getAttribute("emp_details");
             int i = 0;%>
 
         <div class="container">

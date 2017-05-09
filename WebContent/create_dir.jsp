@@ -24,6 +24,14 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
+    
+      <%
+            if (session.getAttribute("id") == null) {
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+            }
+        %>
+       <jsp:include page="header.jsp" />
 <div class="container">
 <div class="panel panel-danger">
  <div class="panel-heading">Create new Directory</div>

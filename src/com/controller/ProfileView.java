@@ -24,8 +24,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author ashok
  */
-@WebServlet(name = "AssignBonus", urlPatterns = {"/AssignBonus"})
-public class AssignBonus extends HttpServlet {
+@WebServlet(name = "ProfileView", urlPatterns = {"/ProfileView"})
+public class ProfileView extends HttpServlet {
+
+  
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -39,12 +41,7 @@ public class AssignBonus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("id") == null) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-
-        }
-
+        doPost(request, response);
     }
 
     /**
@@ -58,22 +55,18 @@ public class AssignBonus extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.isNew()) {
-
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-        }
-
-        Integer user_id = (Integer) session.getAttribute("id");
-
-        ArrayList<Employee> manager_emp_list = new ArrayList<Employee>();
+       
+         HttpSession session = request.getSession();
+         Integer user_id=(Integer)session.getAttribute("id");
+        ArrayList<Employee> emp_details = new ArrayList<Employee>();
         try {
-            manager_emp_list = RegisterationService.getEmployees(user_id);
+            emp_details = RegisterationService.getdetails(user_id);
         } catch (SQLException ex) {
-            Logger.getLogger(AssignBonus.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfileView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.setAttribute("mngr_emps", manager_emp_list);
-        request.getRequestDispatcher("assign_bonus.jsp").forward(request, response);
+         request.setAttribute("emp_details", emp_details);
+         request.getRequestDispatcher("view_profile.jsp").forward(request, response);
+         
     }
 
     /**

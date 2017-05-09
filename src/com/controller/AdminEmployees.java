@@ -18,14 +18,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ashok
  */
-@WebServlet(name = "AssignBonus", urlPatterns = {"/AssignBonus"})
-public class AssignBonus extends HttpServlet {
+@WebServlet(name = "AdminEmployees", urlPatterns = {"/AdminEmployees"})
+public class AdminEmployees extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -39,12 +38,7 @@ public class AssignBonus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("id") == null) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-
-        }
-
+           doPost(request,response);
     }
 
     /**
@@ -58,22 +52,23 @@ public class AssignBonus extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.isNew()) {
 
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-        }
+        ArrayList<Employee> active_emp_list = new ArrayList<Employee>();
+        ArrayList<Employee> inactive_emp_list = new ArrayList<Employee>();
 
-        Integer user_id = (Integer) session.getAttribute("id");
-
-        ArrayList<Employee> manager_emp_list = new ArrayList<Employee>();
         try {
-            manager_emp_list = RegisterationService.getEmployees(user_id);
+            active_emp_list = RegisterationService.getActiveuserlist();
+            inactive_emp_list = RegisterationService.getInActiveuserlist();
+
         } catch (SQLException ex) {
-            Logger.getLogger(AssignBonus.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.setAttribute("mngr_emps", manager_emp_list);
-        request.getRequestDispatcher("assign_bonus.jsp").forward(request, response);
+
+        request.setAttribute("active_emplist", active_emp_list);
+        request.setAttribute("inactive_emplist", inactive_emp_list);
+
+        request.getRequestDispatcher("employees.jsp").forward(request, response);
+
     }
 
     /**

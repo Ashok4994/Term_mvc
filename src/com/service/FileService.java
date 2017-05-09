@@ -4,8 +4,10 @@ import com.dao.DirectorDAO;
 import com.dao.FileDAO;
 import com.model.DirectoryBean;
 import com.model.FileBean;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.servlet.http.Part;
 
 public class FileService {
     
@@ -20,6 +22,12 @@ public class FileService {
         FileBean file;
         file = FileDAO.getOnefile(fil_id);
         return file;
+    }
+
+    public static boolean uploadFile(Integer dir_id, Part filePart, String title, Integer uid, int n) throws IOException, SQLException {
+     boolean status;
+     status=FileDAO.uploadFile(dir_id,filePart,title,uid,n);
+     return status;
     }
 
     

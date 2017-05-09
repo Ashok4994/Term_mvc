@@ -31,6 +31,7 @@
 
     </head>
     <body>
+           <jsp:include page="header.jsp" />
         <h2>Leave Requests</h2>
         <div class="container">
             <div class="panel panel-info">
@@ -49,7 +50,7 @@
                         </thead>
                         <tbody>
                         <tbody>  
-                            <% ArrayList<LeaveBean> approvalList = (ArrayList<LeaveBean>) session.getAttribute("approvalList");%>
+                            <% ArrayList<LeaveBean> approvalList = (ArrayList<LeaveBean>) request.getAttribute("approvalList");%>
                             <%for (int i = 0; i < approvalList.size(); i++) {%>
                             <tr>
                                 <td><%=approvalList.get(i).getstartDate()%> </td>

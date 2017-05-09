@@ -16,17 +16,17 @@
         <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
 
         <!-- Custom CSS -->
 
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="../css/style.css">
 
         <!-- Home page CSS -->
-        <link rel="stylesheet" href="css/admin.css">
+        <link rel="stylesheet" href="../css/admin.css">
 
         <!-- People page styles CSS -->
-        <link rel="stylesheet" href="css/people.css">
+        <link rel="stylesheet" href="../css/people.css">
     </head>
     <body>
         <% ArrayList<Employee> emp_details = (ArrayList<Employee>) session.getAttribute("emp_list");

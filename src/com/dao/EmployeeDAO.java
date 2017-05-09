@@ -9,6 +9,7 @@ import com.dao.DBAccess;
 import com.utility.ResponseObject;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class EmployeeDAO {
@@ -127,10 +128,35 @@ public class EmployeeDAO {
         return man_emps;
     }
 
-    public static ArrayList<Employee> getuserlist() throws SQLException {
+    public static ArrayList<Employee> getActiveuserlist() throws SQLException {
         ArrayList<Employee> emp_list = new ArrayList<Employee>();
 
-        String sql = "SELECT * FROM termproject.employee;";
+        String sql = "SELECT * FROM termproject.employee where status='active';";
+        PreparedStatement pstm = DBAccess.getConnection().prepareStatement(sql);
+        ResultSet rs = pstm.executeQuery();
+        while (rs.next()) {
+            Employee e = new Employee();
+            e.setFirstname(rs.getString("firstname"));
+            e.setLastname(rs.getString("lastname"));
+            e.setAddress(rs.getString("address"));
+            e.setEmail(rs.getString("email"));
+            e.setPhone(rs.getString("phone"));
+            e.setHierarchy(rs.getString("hierarchy"));
+            e.setUserId(rs.getInt("userid"));
+            e.setLevelId(rs.getInt("levelid"));
+            e.setRole(rs.getString("role"));
+            e.setStatus(rs.getString("status"));
+            e.setManagerId(rs.getInt("mid"));
+            e.setTeamId(rs.getInt("teamid"));
+            emp_list.add(e);
+        }
+        return emp_list;
+    }
+    
+     public static ArrayList<Employee> getInActiveuserlist() throws SQLException {
+        ArrayList<Employee> emp_list = new ArrayList<Employee>();
+
+        String sql = "SELECT * FROM termproject.employee where status='inactive';";
         PreparedStatement pstm = DBAccess.getConnection().prepareStatement(sql);
         ResultSet rs = pstm.executeQuery();
         while (rs.next()) {
@@ -174,5 +200,45 @@ public class EmployeeDAO {
 
         return true;
 
+    }
+
+    public static HashMap<Integer, String> getMngrHierarchy(Integer mid) throws SQLException {
+        HashMap<Integer, String> mngr_hier=new HashMap<Integer, String>();
+          String sql = "SELECT * FROM termproject.employee where userid=?;";
+        PreparedStatement pstm = DBAccess.getConnection().prepareStatement(sql);
+        pstm.setInt(1,mid);
+        ResultSet rs = pstm.executeQuery();
+        while(rs.next()) {
+            mngr_hier.put(mid, rs.getString("hierarchy"));
+        }
+        return mngr_hier;
+    }
+
+    public static ArrayList<Employee> getOTeamEmpList(int team_id) throws SQLException {
+       
+         ArrayList<Employee> o_emp_details = new ArrayList<Employee>();
+
+        String sql = "SELECT * FROM termproject.employee where role!='admin' and teamid!=?;";
+        PreparedStatement pstm = DBAccess.getConnection().prepareStatement(sql);
+        pstm.setInt(1, team_id);
+        ResultSet rs = pstm.executeQuery();
+        while (rs.next()) {
+            Employee e = new Employee();
+            e.setFirstname(rs.getString("firstname"));
+            e.setLastname(rs.getString("lastname"));
+            e.setAddress(rs.getString("address"));
+            e.setEmail(rs.getString("email"));
+            e.setPhone(rs.getString("phone"));
+            e.setHierarchy(rs.getString("hierarchy"));
+            e.setLevelId(rs.getInt("levelid"));
+            e.setRole(rs.getString("role"));
+            e.setStatus(rs.getString("status"));
+            e.setManagerId(rs.getInt("mid"));
+            e.setTeamId(rs.getInt("teamid"));
+            e.setUserId(rs.getInt("userid"));
+            o_emp_details.add(e);
+        }
+        return o_emp_details;
+        
     }
 }

@@ -15,6 +15,7 @@ public class DirectoryBean {
     private String dir_name;
     private int dir_id;
     private String permission;
+    private String hierarchy;
 
     public int getManagerId() {
         return manager_id;
@@ -39,11 +40,19 @@ public class DirectoryBean {
     public void setDname(String dir_name) {
         this.dir_name = dir_name;
     }
-     public String getPermission() {
+
+    public String getPermission() {
         return permission;
     }
 
     public void setPermission(String permission) {
         this.permission = permission;
+    }
+     public String getHierarchy() {
+        return hierarchy;
+    }
+
+    public void setHierarchy(String hierarchy) {
+        this.hierarchy = hierarchy;
     }
 }

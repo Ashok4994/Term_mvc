@@ -16,9 +16,16 @@
     </head>
     <body>
         <br>
-        <br>
-        <br>
-
+        <jsp:include page="header.jsp" />
+        <%if ((request.getAttribute("success") != null)) {%>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="alert alert-success">
+                    <strong><%=request.getAttribute("success")%>!</strong>
+                </div>
+            </div>
+        </div>
+        <%} %>
 
         <div class="container">
             <div class="row">

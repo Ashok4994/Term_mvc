@@ -8,6 +8,7 @@ import com.model.Employee;
 import com.model.LeaveBean;
 import com.utility.ResponseObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RegisterationService {
@@ -53,13 +54,22 @@ public class RegisterationService {
         mngr_emps = EmployeeDAO.getEmployees(empid);
         return mngr_emps;
     }
-
-    public static ArrayList<Employee> getuserlist() throws SQLException {
+ 
+  
+    
+      public static ArrayList<Employee> getActiveuserlist() throws SQLException {
 
         ArrayList<Employee> employee_list = new ArrayList<Employee>();
-        employee_list = EmployeeDAO.getuserlist();
+        employee_list = EmployeeDAO.getActiveuserlist();
         return employee_list;
     }
+     public static ArrayList<Employee> getInActiveuserlist() throws SQLException {
+
+        ArrayList<Employee> employee_list = new ArrayList<Employee>();
+        employee_list = EmployeeDAO.getInActiveuserlist();
+        return employee_list;
+    }
+    
 
     public static ArrayList<Integer> getMngrlist() throws SQLException {
 
@@ -73,4 +83,19 @@ public class RegisterationService {
         return status;
     }
 
+    public static HashMap<Integer, String> getManHierarchy(Integer mid) throws SQLException {
+       HashMap<Integer, String> mngr=new HashMap<Integer, String>();
+       mngr=EmployeeDAO.getMngrHierarchy(mid);
+       
+       return mngr;
+        
+        
+    }
+
+    public static ArrayList<Employee> getOtherTeamEmployees(int team_id) throws SQLException {
+        
+         ArrayList<Employee> o_list = new ArrayList<Employee>();
+        o_list = EmployeeDAO.getOTeamEmpList(team_id);
+        return o_list;
+    }
 }

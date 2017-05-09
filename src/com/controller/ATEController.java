@@ -26,8 +26,34 @@ import javax.servlet.http.HttpSession;
  *
  * @author ashok
  */
-@WebServlet(name = "ViewDirectories", urlPatterns = {"/ViewDirectories"})
-public class ViewDirectories extends HttpServlet {
+@WebServlet(name = "ATEController", urlPatterns = {"/ATEController"})
+public class ATEController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ATEController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ATEController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -41,10 +67,7 @@ public class ViewDirectories extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("id")==null) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-        }
+        doPost(request, response);
     }
 
     /**
@@ -59,31 +82,34 @@ public class ViewDirectories extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        int user_id = (Integer) session.getAttribute("id");
+        ArrayList<Employee> ate = new ArrayList<Employee>();
+        ArrayList<Employee> emp_details = new ArrayList<Employee>();
         ArrayList<DirectoryBean> own_directories = new ArrayList<DirectoryBean>();
         ArrayList<DirectoryBean> subm_directories = new ArrayList<DirectoryBean>();
         ArrayList<DirectoryBean> supm_directories = new ArrayList<DirectoryBean>();
-        ArrayList<DirectoryBean> ate_directories = new ArrayList<DirectoryBean>();
-        ArrayList<Employee> emp_details = new ArrayList<Employee>();
-        int i = 0, level_id, team_id;
+
+        HttpSession session = request.getSession();
+        Integer uid = (Integer) session.getAttribute("id");
+        int team_id, level_id;
+
         try {
-            emp_details = RegisterationService.getdetails(user_id);
-            level_id = emp_details.get(0).getLevelId();
+            emp_details = RegisterationService.getdetails(uid);
             team_id = emp_details.get(0).getTeamId();
-            own_directories = DirectoryService.getown(user_id);
-            subm_directories = DirectoryService.getSubd(user_id, level_id, team_id);
-            supm_directories = DirectoryService.getSuperd(user_id, level_id, team_id);
-            ate_directories = DirectoryService.getATEd(user_id);
+            level_id = emp_details.get(0).getLevelId();
+            ate = RegisterationService.getOtherTeamEmployees(team_id);
+            own_directories = DirectoryService.getown(uid);
+            subm_directories = DirectoryService.getSubd(uid, level_id, team_id);
+            supm_directories = DirectoryService.getSuperd(uid, level_id, team_id);
+
         } catch (SQLException ex) {
-            Logger.getLogger(ViewDirectories.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ATEController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        request.setAttribute("other_team_emp_list", ate);
         request.setAttribute("own_dir", own_directories);
         request.setAttribute("sub_dir", subm_directories);
         request.setAttribute("supr_dir", supm_directories);
-        request.setAttribute("ate_dir", ate_directories);
-        request.getRequestDispatcher("view_dir.jsp").forward(request, response);
+        request.getRequestDispatcher("ate1_assign.jsp").forward(request, response);
 
     }
 

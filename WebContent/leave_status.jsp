@@ -23,7 +23,7 @@
     </head>
     <body>
 
-
+   <jsp:include page="header.jsp" />
         <div class="container">
             <div class="panel panel-warning">
                 <div class="panel-heading">Leave Status </div>

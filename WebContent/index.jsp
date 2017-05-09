@@ -32,14 +32,14 @@
                                     <label for="inputEmail3" class="col-sm-3 control-label">
                                         User ID</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" value="8013"id="inputEmail3" placeholder="User ID" name="uid">
+                                        <input type="text" class="form-control" value="8013"id="inputEmail3" placeholder="" name="uid">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPassword3" class="col-sm-3 control-label">
                                         Password</label>
                                     <div class="col-sm-9">
-                                        <input type="password" class="form-control" value="Ashok4321"id="inputPassword3" placeholder="Password" name="passwd">
+                                        <input type="password" class="form-control" value="Ashok4321" id="inputPassword3" placeholder="Password" name="passwd">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -79,8 +79,5 @@
             </div>
         </div>
     </div>
-
-
-
 </body>
 </html>
